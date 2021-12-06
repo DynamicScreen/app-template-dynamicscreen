@@ -1,0 +1,27 @@
+# YAML
+id: app-template-dynamicscreen
+name: app.name
+description: app.description
+logo: far fa-drafting-compass
+version: 0.2.0
+channel: stable
+api-level: 1
+color: blue
+author:
+    name: DynamicScreen
+    email: bonjour@dynamicscreen.com
+modules:
+    - name: modules.template.name
+      logo: far fa-drafting-compass
+      identifier: template
+      color: salmon
+      type: slide
+      description: modules.template.description
+      options:
+        vue:
+            component: src/Template/Template.ts
+            options: src/Template/TemplateOptions.ts
+        php:
+            handler: Vendor\Template\TemplateHandler
+        node:
+            handler: src/handler.js

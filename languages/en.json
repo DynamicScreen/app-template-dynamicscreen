@@ -1,0 +1,17 @@
+{
+  "app": {
+    "name": "Template",
+    "description": "Display a template",
+    "author": {
+      "name": "DynamicScreen",
+      "email": "bonjour@dynamicscreen.com",
+      "note": "Written with love <3 Buy me a cofee @ itsajoke.com !"
+    }
+  },
+  "modules": {
+    "weather": {
+      "name": "Template",
+      "description": "Display a template"
+    }
+  }
+}
