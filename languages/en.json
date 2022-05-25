@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Template",
-    "description": "Display a template",
+    "description": "Display one of your templates that you created using the Designer",
     "author": {
       "name": "DynamicScreen",
       "email": "bonjour@dynamicscreen.com",
@@ -9,9 +9,9 @@
     }
   },
   "modules": {
-    "weather": {
+    "template": {
       "name": "Template",
-      "description": "Display a template"
+      "description": "Display one of your templates that you created using the Designer"
     }
   }
 }

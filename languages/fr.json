@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "Iframe",
-    "description": "Affiche un site web dans une iframe",
+    "name": "Template",
+    "description": "Affichez l'un de vos templates créés à l'aide du Designer",
     "author": {
       "name": "DynamicScreen",
       "email": "bonjour@dynamicscreen.com",
@@ -9,9 +9,9 @@
     }
   },
   "modules": {
-    "weather": {
-      "name": "Iframe",
-      "description": "Affiche un site web dans une iframe"
+    "template": {
+      "name": "Template",
+      "description": "Affichez l'un de vos templates créés à l'aide du Designer"
     }
   }
 }

@@ -1,29 +1,12 @@
 import {
-    BaseContext,
-    AssetDownload,
-    IAssetsStorageAbility,
-    IGuardsManager,
-    ISlideContext,
-    IPublicSlide,
-    SlideModule
+    ISlideOptionsContext,
+    SlideOptionsModule, VueInstance
 } from "dynamicscreen-sdk-js";
 
-import i18next from "i18next";
-import {SlideUpdateFunctions} from "../../../../../../../dynamicscreen-sdk-js/src/index";
-
-const en = require("../../languages/en.json");
-const fr = require("../../languages/fr.json");
-
-type updateValue = (key: string) => { modelValue: any, "onUpdate:modelValue": (value: any) => void }
-
-export default class TemplateOptionsModule extends SlideModule {
-    constructor(context: ISlideContext) {
+export default class TemplateOptionsModule extends SlideOptionsModule {
+    constructor(context: ISlideOptionsContext) {
         super(context);
     }
-
-    trans(key: string) {
-        return i18next.t(key);
-    };
 
     async onReady() {
         return true;
@@ -49,28 +32,49 @@ export default class TemplateOptionsModule extends SlideModule {
         console.log('on updated')
     }
 
-    initI18n() {
-        i18next.init({
-            fallbackLng: 'en',
-            lng: 'fr',
-            resources: {
-                en: { translation: en },
-                fr: { translation: fr },
-            },
-            debug: true,
-        }, (err, t) => {
-            if (err) return console.log('something went wrong loading translations', err);
-        });
-    };
-
     // @ts-ignore
-    setup(props, ctx, update: SlideUpdateFunctions, OptionsContext) {
-        const { h, reactive, ref } = ctx;
+    setup(props: Record<string, any>, vue: VueInstance, context: ISlideOptionsContext) {
+const en = require("/Users/nicolas/Desktop/DS/app-server/storage/apps//app-template-dynamicscreen/0.2.0/languages/en.json");
+const fr = require("/Users/nicolas/Desktop/DS/app-server/storage/apps//app-template-dynamicscreen/0.2.0/languages/fr.json");
+const translator: any = this.context.translator;
+translator.addResourceBundle('en', 'template', en);
+translator.addResourceBundle('fr', 'template', fr);
+this.t = (key: string, namespace: string = 'template') => translator.t(key, {ns: namespace});
 
-        const { Field, TextInput, ColorPicker } = OptionsContext.components
+        const { h, onMounted, ref } = vue;
 
-        console.log('in setup before return h')
+        const { Field, TextInput, Select } = this.context.components;
+        const update = this.context.update;
+        const templates = ref();
+        console.log("MAJ")
+
+        onMounted(() => {
+            //@ts-ignore
+            this.context.getTemplates().value.then((response) => {
+                templates.value = []
+                let arrayT: { name: string, key: string }[] = [];
+                for (let template of response) {
+
+                    let selectItem = {
+                        name: template.name,
+                        key: template.id.toString()
+                    }
+                    arrayT.push(selectItem);
+                }
+                templates.value = arrayT;
+                console.log("TEMPLATE VALUE", templates.value)
+            }).catch((err) => {
+                console.log("ERROR", err);
+            });
+        })
+
         return () =>
-            h("div", {}, [])
+          h(Select, {
+              options: templates.value ? templates.value : [{name: "", key: ""}],
+              placeholder: "Template",
+              keyProp: 'key',
+              valueProp: 'name',
+              ...update.option("template_id")
+          })
     }
 }

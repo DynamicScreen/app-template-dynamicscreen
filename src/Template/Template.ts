@@ -1,39 +1,14 @@
 import {
-    BaseContext,
-    AssetDownload,
-    IAssetsStorageAbility,
-    IGuardsManager,
-    ISlideContext,
-    IPublicSlide,
-    SlideModule,
-    SignalDispatcher
+  IAssetsStorageAbility,
+  ISlideContext,
+  IPublicSlide,
+  SlideModule, VueInstance
 } from "dynamicscreen-sdk-js";
-
-import {
-    ConcreteComponent,
-    defineComponent,
-    DefineComponent,
-    onMounted,
-    reactive,
-    Ref,
-    ref,
-    resolveComponent,
-    VNode
-} from 'vue';
-import i18next from "i18next";
-import { h } from "vue"
-
-const en = require("../../../languages/en.json");
-const fr = require("../../../languages/fr.json");
 
 export default class TemplateSlideModule extends SlideModule {
     constructor(context: ISlideContext) {
         super(context);
     }
-
-    trans(key: string) {
-        return i18next.t(key);
-    };
 
     async onReady() {
         try {
@@ -68,45 +43,21 @@ export default class TemplateSlideModule extends SlideModule {
     onUpdated() {
     }
 
-    initI18n() {
-        i18next.init({
-            fallbackLng: 'en',
-            lng: 'fr',
-            resources: {
-                en: { translation: en },
-                fr: { translation: fr },
-            },
-            debug: true,
-        }, (err, t) => {
-            if (err) return console.log('something went wrong loading translations', err);
-        });
-    };
-
     // @ts-ignore
-    setup(props, ctx) {
-
+    setup(props: Record<string, any>, vue: VueInstance, context: ISlideContext) {
+        const { h, ref, reactive, computed } = vue;
         const slide = reactive(props.slide) as IPublicSlide;
         this.context = reactive(props.slide.context);
 
-        const onPrepare = new SignalDispatcher();
-        const onPlay = new SignalDispatcher();
-        const onEnded = new SignalDispatcher();
-
-        this.context.template.provideTemplateContext({
-            onPrepare: onPrepare.asEvent(),
-            onPlay: onPlay.asEvent(),
-            onEnded: onEnded.asEvent()
-        });
-
         this.context.onPrepare(async () => {
-            onPrepare.dispatch();
+
         });
 
         this.context.onReplay(async () => {
         });
 
         this.context.onPlay(async () => {
-            onPlay.dispatch();
+
         });
 
         // this.context.onPause(async () => {
@@ -114,11 +65,11 @@ export default class TemplateSlideModule extends SlideModule {
         // });
 
         this.context.onEnded(async () => {
-            onEnded.dispatch();
+
         });
 
         return () =>
-            h(this.context.template.component, {
+            h(this.context.template!.component, {
                 data: this.context.slide.data
             })
     }

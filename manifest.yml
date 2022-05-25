@@ -10,18 +10,26 @@ color: blue
 author:
     name: DynamicScreen
     email: bonjour@dynamicscreen.com
+privileges:
+  needs_template:
+    - identifier: template
+      type: template
+      why: privileges.needs_template.template.why
 modules:
     - name: modules.template.name
       logo: far fa-drafting-compass
       identifier: template
-      color: salmon
+      color: blue
       type: slide
       description: modules.template.description
       options:
+        privileges:
+          needs_template:
+            - template
         vue:
             component: src/Template/Template.ts
             options: src/Template/TemplateOptions.ts
         php:
-            handler: Vendor\Template\TemplateHandler
+            handler: \DynamicScreen\Template\Template\TemplateHandler
         node:
             handler: src/handler.js
