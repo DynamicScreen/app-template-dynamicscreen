@@ -43,10 +43,9 @@ this.t = (key: string, namespace: string = 'template') => translator.t(key, {ns:
 
         const { h, onMounted, ref } = vue;
 
-        const { Field, TextInput, Select } = this.context.components;
+        const { Field, Select, NumberInput } = this.context.components;
         const update = this.context.update;
         const templates = ref();
-        console.log("MAJ")
 
         onMounted(() => {
             //@ts-ignore
@@ -62,19 +61,24 @@ this.t = (key: string, namespace: string = 'template') => translator.t(key, {ns:
                     arrayT.push(selectItem);
                 }
                 templates.value = arrayT;
-                console.log("TEMPLATE VALUE", templates.value)
             }).catch((err) => {
                 console.log("ERROR", err);
             });
         })
 
-        return () =>
-          h(Select, {
-              options: templates.value ? templates.value : [{name: "", key: ""}],
-              placeholder: "Template",
-              keyProp: 'key',
-              valueProp: 'name',
-              ...update.option("template_id")
-          })
+        return () => [
+            h(Field, { class: 'flex-1', label: this.t('modules.template.options.select_label') }, () => [
+                h(Select, {
+                    options: templates.value ? templates.value : [{name: "", key: ""}],
+                    placeholder: this.t("modules.template.options.select_placeholder"),
+                    keyProp: 'key',
+                    valueProp: 'name',
+                    ...update.option("template")
+                })
+            ]),
+            h(Field, {class: 'flex-1', label: this.t('modules.template.options.page_count_label')}, [
+                h(NumberInput, { min: 0, max: 100, default: 1, ...update.option("page")})
+            ])
+        ]
     }
 }

@@ -11,7 +11,12 @@
   "modules": {
     "template": {
       "name": "Template",
-      "description": "Affichez l'un de vos templates créés à l'aide du Designer"
+      "description": "Affichez l'un de vos templates créés à l'aide du Designer",
+      "options": {
+        "select_label": "Choisissez votre template",
+        "select_placeholder": "Template...",
+        "page_count_label": "Nombre de pages"
+      }
     }
   }
 }
