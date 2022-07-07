@@ -34,12 +34,12 @@ export default class TemplateOptionsModule extends SlideOptionsModule {
 
     // @ts-ignore
     setup(props: Record<string, any>, vue: VueInstance, context: ISlideOptionsContext) {
-const en = require("/Users/nicolas/Desktop/DS/app-server/storage/apps//app-template-dynamicscreen/0.2.0/languages/en.json");
-const fr = require("/Users/nicolas/Desktop/DS/app-server/storage/apps//app-template-dynamicscreen/0.2.0/languages/fr.json");
-const translator: any = this.context.translator;
-translator.addResourceBundle('en', 'template', en);
-translator.addResourceBundle('fr', 'template', fr);
-this.t = (key: string, namespace: string = 'template') => translator.t(key, {ns: namespace});
+        /*const en = require("/Users/nicolas/Desktop/DS/app-server/storage/apps//app-template-dynamicscreen/0.2.0/languages/en.json");
+        const fr = require("/Users/nicolas/Desktop/DS/app-server/storage/apps//app-template-dynamicscreen/0.2.0/languages/fr.json");
+        const translator: any = this.context.translator;
+        translator.addResourceBundle('en', 'template', en);
+        translator.addResourceBundle('fr', 'template', fr);
+        this.t = (key: string, namespace: string = 'template') => translator.t(key, {ns: namespace});*/
 
         const { h, onMounted, ref } = vue;
 
