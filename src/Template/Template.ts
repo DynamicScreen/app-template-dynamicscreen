@@ -70,7 +70,10 @@ export default class TemplateSlideModule extends SlideModule {
 
         return () =>
             h(this.context.template!.component, {
-                data: this.context.slide.data
+                canvas: this.context.slide.data.canvas,
+                widgets: this.context.slide.data.objects,
+                duration: this.context.slide.duration,
+                isZoning: false
             })
     }
 }
